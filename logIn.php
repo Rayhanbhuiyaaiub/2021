@@ -1,6 +1,42 @@
 <?php
+session_start();
+//IS LOGGED IN VALIDATION
+if(isset($_SESSION['username']))
+{
+    header('Location:home.php');
+    die();
+}
+
+//-------------
+
 include 'db_include.php';
-$msg="UserName or Password Invalid";
+$isError =false;
+$username = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $query = "Select * from user where username='$username' and password='$password'";
+
+    $result = mysqli_query($conn,$query);
+
+    if(mysqli_num_rows($result)<=0)
+    {
+        $isError = true;
+        $isRight = false;
+    }
+
+    if(mysqli_num_rows($result)>0)
+    {
+        $isError= false;
+
+        $_SESSION['username'] = $username;
+        header('location:home.php');
+        
+    }
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -17,7 +53,7 @@ $msg="UserName or Password Invalid";
         <form action="" class="" method="Post">
             <div class="form-control">
                 <label for="">User Name:</label>
-                <input type="text" name="username" id="" class="form-control">
+                <input type="text" value="<?=$username;?>" name="username" id="" class="form-control">
             </div>
             <div class="form-control">
                 <label for="">Password:</label>
@@ -26,7 +62,15 @@ $msg="UserName or Password Invalid";
             <div align="center" class="mt-5">
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
+            <?php if($isError){ ?>
+            <div style="text-align:center;" class="alert alert-danger mt-3">
+                Wrong Credentials!
+            </div>
+            <?php } ?>
         </form> 
+            <div align="center" class="mt-5">
+                <a href="registration.php"><button class="btn btn-link">Click Here To Sign Up!</button></a>
+            </div>
     </div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-
+include('session_val.php');
 
 
 ?>
@@ -10,14 +10,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+    <title>User Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
 </head>
 <body>
+   <?php include 'navbar.html'; ?>
     <div class="container">
-        <div align="center" class="">
-            <a href="logIn.php"><button class="btn btn-secondary">Click Here To Login</button></a>
+        <h1 align="center" style="text-transform:uppercase;">Welcome Home <?=$_SESSION['username']?></h1>
+        <div align="center">
+            <a href=""><button class="btn btn-secondary mt-5">CLICK HERE TO SEE NOTES</button></a>
         </div>
     </div>
+
+
 </body>
 </html>
